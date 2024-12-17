@@ -138,6 +138,12 @@ void ATopDownCharacter::MoveCompleted(const FInputActionValue& Value)
 
 void ATopDownCharacter::Shoot(const FInputActionValue& Value)
 {
+	if (!CanShoot) return;
+
+	CanShoot = false;
+	
+	GetWorldTimerManager().SetTimer(ShootCooldownTimer, this, &ATopDownCharacter::OnShootCooldownTimerTimeout, 1.0f, false, ShootCooldownDurationInSeconds);
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::White, TEXT("SHOOT"));
 }
 
 bool ATopDownCharacter::IsInMapBoundsHorizontal(float XPos)
@@ -156,5 +162,10 @@ bool ATopDownCharacter::IsInMapBoundsVertical(float ZPos)
 	Result = (ZPos > VerticalLimits.X && ZPos < VerticalLimits.Y);
 
 	return Result;
+}
+
+void ATopDownCharacter::OnShootCooldownTimerTimeout()
+{
+	CanShoot = true;
 }
 

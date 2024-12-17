@@ -14,6 +14,8 @@
 #include "InputActionValue.h"
 #include "GameFramework/Controller.h"
 
+#include "Engine/TimerHandle.h"
+
 #include "TopDownCharacter.generated.h"
 
 UCLASS()
@@ -72,6 +74,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	USceneComponent* BulletSpawnPosition;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool CanShoot = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float ShootCooldownDurationInSeconds = 0.3f;
+
+	FTimerHandle ShootCooldownTimer;
+
+
 	ATopDownCharacter();
 
 	virtual void BeginPlay() override;
@@ -89,4 +100,6 @@ public:
 	bool IsInMapBoundsHorizontal(float XPos);
 	
 	bool IsInMapBoundsVertical(float ZPos);
+
+	void OnShootCooldownTimerTimeout();
 };
