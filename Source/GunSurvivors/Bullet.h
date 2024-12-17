@@ -5,6 +5,7 @@
 
 #include "Components/SphereComponent.h"
 #include "PaperSpriteComponent.h"
+#include "Engine/TimerHandle.h"
 
 #include "Bullet.generated.h"
 
@@ -25,7 +26,14 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MovementSpeed = 200.0f;
-	
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool IsLaunched = false;
+
+	FTimerHandle DeleteTimer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float DeleteTime = 10.0f;
 
 
 	ABullet();
@@ -34,4 +42,7 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	void Launch(FVector2D Direction, float Speed);
+
+	void OnDeleteTimerTimeout();
 };
