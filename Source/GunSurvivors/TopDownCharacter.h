@@ -43,4 +43,9 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void MoveTriggered(const FInputActionValue& Value);
+
+	void MoveCompleted(const FInputActionValue& Value);
+
+	void Shoot(const FInputActionValue& Value);
 };
