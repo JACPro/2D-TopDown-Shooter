@@ -16,9 +16,6 @@ ABullet::ABullet()
 void ABullet::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	Launch(FVector2D(0.0f, 1.0f), 25.0f);
-
 }
 
 void ABullet::Tick(float DeltaTime)

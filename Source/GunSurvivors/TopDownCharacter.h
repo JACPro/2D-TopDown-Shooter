@@ -16,6 +16,8 @@
 
 #include "Engine/TimerHandle.h"
 
+#include "Bullet.h"
+
 #include "TopDownCharacter.generated.h"
 
 UCLASS()
@@ -81,6 +83,9 @@ public:
 	float ShootCooldownDurationInSeconds = 0.3f;
 
 	FTimerHandle ShootCooldownTimer;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ABullet> BulletActorToSpawn;
 
 
 	ATopDownCharacter();
