@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -21,6 +19,13 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UPaperSpriteComponent* BulletSprite;
+
+	UPROPERTY(BlueprintReadWrite)
+	FVector2D MovementDirection;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MovementSpeed = 200.0f;
+	
 
 
 	ABullet();
