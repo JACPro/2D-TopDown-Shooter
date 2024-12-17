@@ -54,6 +54,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool CanMove = true;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector2D HorizontalLimits;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector2D VerticalLimits;
+
 	ATopDownCharacter();
 
 	virtual void BeginPlay() override;
@@ -67,4 +73,8 @@ public:
 	void MoveCompleted(const FInputActionValue& Value);
 
 	void Shoot(const FInputActionValue& Value);
+
+	bool IsInMapBoundsHorizontal(float XPos);
+	
+	bool IsInMapBoundsVertical(float ZPos);
 };
