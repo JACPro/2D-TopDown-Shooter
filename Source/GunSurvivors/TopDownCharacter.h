@@ -4,7 +4,9 @@
 #include "GameFramework/Pawn.h"
 
 #include "Components/CapsuleComponent.h"
+#include "Components/SceneComponent.h"
 #include "PaperFlipbookComponent.h"
+#include "PaperSpriteComponent.h"
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
@@ -59,6 +61,16 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector2D VerticalLimits;
+
+	// Shooting
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	USceneComponent* GunParent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UPaperSpriteComponent* GunSprite;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	USceneComponent* BulletSpawnPosition;
 
 	ATopDownCharacter();
 
