@@ -20,12 +20,21 @@ class GUNSURVIVORS_API ATopDownCharacter : public APawn
 	GENERATED_BODY()
 
 public:
+	// Collision
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UCapsuleComponent* CapsuleComp;
 
+	// Animation
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UPaperFlipbookComponent* CharacterFlipbook;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPaperFlipbook* IdleFlipbook;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPaperFlipbook* RunFlipbook;
+
+	// Input
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	UInputMappingContext* InputMappingContext;
 
@@ -35,6 +44,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	UInputAction* ShootAction;
 
+	// Movement
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MovementSpeed = 100.0f;
 
