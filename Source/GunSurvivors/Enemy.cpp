@@ -69,3 +69,23 @@ void AEnemy::Tick(float DeltaTime)
 	}
 }
 
+void AEnemy::Die()
+{
+	if (!IsAlive) return;
+
+	IsAlive = false;
+	CanFollow = false;
+
+	EnemyFlipbook->SetFlipbook(DeadFlipbookAsset);
+	EnemyFlipbook->SetTranslucentSortPriority(-5);
+
+	GetWorldTimerManager().SetTimer(DestroyTimer, this, &AEnemy::OnDestroyTimerTimeout, 1.0f, false, DestroyTime);
+
+
+}
+
+void AEnemy::OnDestroyTimerTimeout()
+{
+	Destroy();
+}
+
