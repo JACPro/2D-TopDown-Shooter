@@ -1,5 +1,7 @@
 #include "Bullet.h"
 
+#include "Enemy.h"
+
 ABullet::ABullet()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -10,12 +12,14 @@ ABullet::ABullet()
 	BulletSprite = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("BulletSprite"));
 	BulletSprite->SetupAttachment(RootComponent);
 
-	MovementDirection = FVector2D(1.0f, 0.0f);
+	MovementDirection = FVector2D(1.0f, 0.0f);	
 }
 
 void ABullet::BeginPlay()
 {
 	Super::BeginPlay();
+
+	SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &ABullet::OverlapBegin);
 }
 
 void ABullet::Tick(float DeltaTime)
@@ -49,4 +53,24 @@ void ABullet::Launch(FVector2D Direction, float Speed)
 void ABullet::OnDeleteTimerTimeout()
 {
 	Destroy();
+}
+
+void ABullet::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool FromSweep, const FHitResult& SweepResult)
+{
+	AEnemy* Enemy = Cast<AEnemy>(OtherActor);
+
+	if (Enemy && Enemy->IsAlive)
+	{
+		DisableBullet();
+		//Enemy->Die();
+	}
+}
+
+void ABullet::DisableBullet()
+{
+	if (IsDisabled) return;
+
+	IsDisabled = true;
+	SphereComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	BulletSprite->DestroyComponent();
 }

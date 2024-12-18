@@ -30,6 +30,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool IsLaunched = false;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool IsDisabled = false;
+
 	FTimerHandle DeleteTimer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -45,4 +48,10 @@ public:
 	void Launch(FVector2D Direction, float Speed);
 
 	void OnDeleteTimerTimeout();
+
+	UFUNCTION()
+	void OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex, bool FromSweep, const FHitResult& SweepResult);
+
+	void DisableBullet();
 };
