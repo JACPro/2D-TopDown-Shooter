@@ -12,6 +12,8 @@
 
 #include "Enemy.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEnemyDiedDelegate);
+
 UCLASS()
 class GUNSURVIVORS_API AEnemy : public AActor
 {
@@ -52,7 +54,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float DestroyTime = 10.0f;
 
-
+	FEnemyDiedDelegate EnemyDiedDelegate;
+	
 	AEnemy();
 
 	virtual void BeginPlay() override;

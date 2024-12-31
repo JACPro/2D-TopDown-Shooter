@@ -12,6 +12,13 @@ void AEnemySpawner::BeginPlay()
 {
 	Super::BeginPlay();
 
+	AGameModeBase* BaseGameMode = UGameplayStatics::GetGameMode(GetWorld());
+	if (BaseGameMode)
+	{
+		GameMode = Cast<AGunSurvivorsGameMode>(BaseGameMode);
+		check(GameMode);
+	}
+	
 	AActor* PlayerActor = UGameplayStatics::GetActorOfClass(GetWorld(), ATopDownCharacter::StaticClass());
 	if (PlayerActor)
 	{
@@ -71,6 +78,14 @@ void AEnemySpawner::SetupEnemy(AEnemy* Enemy)
 	{
 		Enemy->Player = Player;
 		Enemy->CanFollow = true;
+
+		Enemy->EnemyDiedDelegate.AddDynamic(this, &AEnemySpawner::OnEnemyDied);
 	}
+}
+
+void AEnemySpawner::OnEnemyDied()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::White, TEXT("Enemy died"));
+	//GunSurvivorsGameMode->AddScore();
 }
 

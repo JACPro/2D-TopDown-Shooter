@@ -7,6 +7,7 @@
 
 #include "Enemy.h"
 #include "TopDownCharacter.h"
+#include "GunSurvivorsGameMode.h"
 
 #include "EnemySpawner.generated.h"
 
@@ -38,6 +39,8 @@ public:
 	float DecreaseSpawnTimeByEveryInterval = 0.05f;
 
 	ATopDownCharacter* Player;
+
+	AGunSurvivorsGameMode* GameMode;
 	
 	FTimerHandle SpawnTimer;
 
@@ -56,4 +59,7 @@ public:
 	void SpawnEnemy();
 
 	void SetupEnemy(AEnemy* Enemy);
+
+	UFUNCTION()
+	void OnEnemyDied();
 };
