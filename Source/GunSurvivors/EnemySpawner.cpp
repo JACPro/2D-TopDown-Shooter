@@ -44,5 +44,15 @@ void AEnemySpawner::SpawnEnemy()
 	// Spawn Enemy
 	FVector EnemyLocation = GetActorLocation() + FVector(RandomPosition.X, 0.0f, RandomPosition.Y);
 	AEnemy* Enemy = GetWorld()->SpawnActor<AEnemy>(EnemyActorToSpawn, EnemyLocation, FRotator::ZeroRotator);
+
+	// Increase difficulty
+	TotalEnemyCount++;
+	if (SpawnTime > SpawnTimeMinimumLimit && TotalEnemyCount % DifficultySpikeInterval == 0)
+	{
+		SpawnTime = FMath::Clamp(SpawnTime - DecreaseSpawnTimeByEveryInterval, SpawnTimeMinimumLimit, SpawnTime);
+		
+		StopSpawning();
+		StartSpawning();
+	}
 }
 
