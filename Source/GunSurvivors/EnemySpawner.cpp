@@ -1,5 +1,7 @@
 #include "EnemySpawner.h"
 
+#include "Kismet/GameplayStatics.h"
+
 AEnemySpawner::AEnemySpawner()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -9,6 +11,12 @@ AEnemySpawner::AEnemySpawner()
 void AEnemySpawner::BeginPlay()
 {
 	Super::BeginPlay();
+
+	AActor* PlayerActor = UGameplayStatics::GetActorOfClass(GetWorld(), ATopDownCharacter::StaticClass());
+	if (PlayerActor)
+	{
+		Player = Cast<ATopDownCharacter>(PlayerActor);
+	}
 	
 	StartSpawning();
 }
@@ -44,7 +52,8 @@ void AEnemySpawner::SpawnEnemy()
 	// Spawn Enemy
 	FVector EnemyLocation = GetActorLocation() + FVector(RandomPosition.X, 0.0f, RandomPosition.Y);
 	AEnemy* Enemy = GetWorld()->SpawnActor<AEnemy>(EnemyActorToSpawn, EnemyLocation, FRotator::ZeroRotator);
-
+	SetupEnemy(Enemy);
+	
 	// Increase difficulty
 	TotalEnemyCount++;
 	if (SpawnTime > SpawnTimeMinimumLimit && TotalEnemyCount % DifficultySpikeInterval == 0)
@@ -53,6 +62,15 @@ void AEnemySpawner::SpawnEnemy()
 		
 		StopSpawning();
 		StartSpawning();
+	}
+}
+
+void AEnemySpawner::SetupEnemy(AEnemy* Enemy)
+{
+	if (Enemy)
+	{
+		Enemy->Player = Player;
+		Enemy->CanFollow = true;
 	}
 }
 

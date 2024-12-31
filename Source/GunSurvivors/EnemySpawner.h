@@ -6,6 +6,7 @@
 #include "Engine/TimerHandle.h"
 
 #include "Enemy.h"
+#include "TopDownCharacter.h"
 
 #include "EnemySpawner.generated.h"
 
@@ -36,6 +37,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float DecreaseSpawnTimeByEveryInterval = 0.05f;
 
+	ATopDownCharacter* Player;
+	
 	FTimerHandle SpawnTimer;
 
 	AEnemySpawner();
@@ -51,4 +54,6 @@ public:
 	void StopSpawning();
 
 	void SpawnEnemy();
+
+	void SetupEnemy(AEnemy* Enemy);
 };
