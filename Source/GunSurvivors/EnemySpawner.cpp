@@ -106,6 +106,6 @@ void AEnemySpawner::OnPlayerDied()
 		}
 	}
 	
-	//GameMode->RestartGame();
+	GameMode->RestartGame();
 }
 

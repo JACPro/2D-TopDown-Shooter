@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+
+#include "Engine/TimerHandle.h"
+
 #include "GunSurvivorsGameMode.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FScoreChangedDelegate, int, NewScore);
@@ -20,12 +23,20 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	int Score = 0;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float TimeBeforeRestart = 0.3f;
+	
 	UPROPERTY(BlueprintAssignable)
 	FScoreChangedDelegate ScoreChangedDelegate;
 
+	FTimerHandle RestartGameTimer;
+	
 	AGunSurvivorsGameMode();
 	virtual void BeginPlay() override;
 
 	void SetScore(int NewScore);
 	void AddScore(int AmountToAdd);
+
+	void RestartGame();
+	void OnRestartGameTimerTimeout();
 };
