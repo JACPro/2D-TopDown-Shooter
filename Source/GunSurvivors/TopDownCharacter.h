@@ -20,6 +20,8 @@
 
 #include "TopDownCharacter.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerDiedDelegate);
+
 UCLASS()
 class GUNSURVIVORS_API ATopDownCharacter : public APawn
 {
@@ -78,11 +80,16 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool CanShoot = true;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool IsAlive = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float ShootCooldownDurationInSeconds = 0.3f;
 
 	FTimerHandle ShootCooldownTimer;
+
+	FPlayerDiedDelegate PlayerDiedDelegate;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ABullet> BulletActorToSpawn;
@@ -107,4 +114,8 @@ public:
 	bool IsInMapBoundsVertical(float ZPos);
 
 	void OnShootCooldownTimerTimeout();
+
+	UFUNCTION()
+	void OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex, bool FromSweep, const FHitResult& SweepResult);
 };
