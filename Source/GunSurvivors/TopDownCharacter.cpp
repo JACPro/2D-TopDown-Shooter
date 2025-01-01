@@ -2,6 +2,7 @@
 
 #include "Kismet/KismetMathLibrary.h"
 #include "Enemy.h"
+#include "Kismet/GameplayStatics.h"
 
 ATopDownCharacter::ATopDownCharacter()
 {
@@ -136,7 +137,11 @@ void ATopDownCharacter::MoveTriggered(const FInputActionValue& Value)
 void ATopDownCharacter::MoveCompleted(const FInputActionValue& Value)
 {
 	MovementDirection = FVector2D::ZeroVector;
-	CharacterFlipbook->SetFlipbook(IdleFlipbook);
+
+	if (IsAlive)
+	{
+		CharacterFlipbook->SetFlipbook(IdleFlipbook);
+	}
 }
 
 void ATopDownCharacter::Shoot(const FInputActionValue& Value)
@@ -166,6 +171,9 @@ void ATopDownCharacter::Shoot(const FInputActionValue& Value)
 
 	// Set Destroy Timer
 	GetWorldTimerManager().SetTimer(ShootCooldownTimer, this, &ATopDownCharacter::OnShootCooldownTimerTimeout, 1.0f, false, ShootCooldownDurationInSeconds);
+
+	// Play bullet sound
+	UGameplayStatics::PlaySound2D(GetWorld(), BulletSound);
 }
 
 bool ATopDownCharacter::IsInMapBoundsHorizontal(float XPos)
@@ -188,7 +196,10 @@ bool ATopDownCharacter::IsInMapBoundsVertical(float ZPos)
 
 void ATopDownCharacter::OnShootCooldownTimerTimeout()
 {
-	CanShoot = true;
+	if (IsAlive)
+	{
+		CanShoot = true;
+	}
 }
 
 void ATopDownCharacter::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -205,6 +216,9 @@ void ATopDownCharacter::OverlapBegin(UPrimitiveComponent* OverlappedComponent, A
 			CanShoot = false;
 
 			PlayerDiedDelegate.Broadcast();
+			
+			// Play death sound
+			UGameplayStatics::PlaySound2D(GetWorld(), DeathSound);
 		}
 	}
 }

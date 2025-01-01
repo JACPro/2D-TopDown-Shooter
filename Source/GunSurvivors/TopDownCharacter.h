@@ -18,6 +18,8 @@
 
 #include "Bullet.h"
 
+#include "Sound/SoundBase.h"
+
 #include "TopDownCharacter.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerDiedDelegate);
@@ -94,6 +96,11 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ABullet> BulletActorToSpawn;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundBase* BulletSound;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundBase* DeathSound;
 
 	ATopDownCharacter();
 

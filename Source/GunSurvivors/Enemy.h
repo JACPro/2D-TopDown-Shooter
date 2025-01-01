@@ -10,6 +10,8 @@
 
 #include "Engine/TimerHandle.h"
 
+#include "Sound/SoundBase.h"
+
 #include "Enemy.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEnemyDiedDelegate);
@@ -55,6 +57,9 @@ public:
 	float DestroyTime = 10.0f;
 
 	FEnemyDiedDelegate EnemyDiedDelegate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USoundBase* DeathSound;
 	
 	AEnemy();
 
