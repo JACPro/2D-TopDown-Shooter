@@ -11,7 +11,7 @@ ___
 ___
 
 Topics Covered:
-Everything from the previous project [2D-Racing-Game](https://github.com/JACPro/2D-Racing-Game/tree/main), plus:
+Everything from the previous project [UE5-2D-Driving-Game](https://github.com/JACPro/UE5-2D-Driving-Game/tree/main), plus:
 * Creating and Using Flipbooks
 * Spawning bullets
 * Spawning enemies at random locations
